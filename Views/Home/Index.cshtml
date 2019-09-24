@@ -18,7 +18,7 @@
 
         @if (!String.IsNullOrEmpty(Model.Symbol))
         {
-            if (!Model.Quote.ContainsKey("symbol"))
+            @if (!Model.Quote.ContainsKey("symbol"))
             {
                 <div class="alerts">
                     <div class="alert alert-danger text-center">Stock symbol <b>@Model.Symbol</b> not found!</div>
@@ -29,43 +29,81 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <h1>@Model.Quote.symbol <small>(@Model.Quote.primaryExchange)</small></h1>
+                            <h1>@Model.Quote.symbol</h1>
+                            <h2>(@Model.Quote.primaryExchange)</h2>
                             <h3>$@string.Format("{0:N2}", Model.Quote.latestPrice)</h3>
+
+                            @if (!Model.Logo.ContainsKey("logo"))
+                            {
+                                <br />
+                                <img src="@Model.Logo.url" />
+                            }
                         </div>
                     </div>
                     <div class="col-sm-6">
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3>@Model.Quote.latestTime</h3>
+                                <h3>@Model.Stats.companyName</h3>
                             </div>
                             <div class="panel-body">
                                 <table class="table table-striped">
-                                    <tr>
-                                        <td><b>Open</b></td>
-                                        <td>$@string.Format("{0:N2}", Model.Quote.open)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Close</b></td>
-                                        <td>$@string.Format("{0:N2}", Model.Quote.close)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>High</b></td>
-                                        <td>$@string.Format("{0:N2}", Model.Quote.high)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Low</b></td>
-                                        <td>$@string.Format("{0:N2}", Model.Quote.low)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Volume</b></td>
-                                        <td>@Model.Quote.volume.ToString("N0")</td>
-                                    </tr>
+                                    @if (Model.Quote.open != null)
+                                    {
+                                        <tr>
+                                            <td><b>Open</b></td>
+                                            <td>$@string.Format("{0:N2}", Model.Quote.open)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Close</b></td>
+                                            <td>$@string.Format("{0:N2}", Model.Quote.close)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>High</b></td>
+                                            <td>$@string.Format("{0:N2}", Model.Quote.high)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Low</b></td>
+                                            <td>$@string.Format("{0:N2}", Model.Quote.low)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Volume</b></td>
+                                            <td>@Model.Quote.volume.ToString("N0")</td>
+                                        </tr>
+                                    }
+                                    @if ( Model.Stats.week52high != null)
+                                    {
+                                        <tr>
+                                            <td><b>52 Week High</b></td>
+                                            <td>$@string.Format("{0:N2}", Model.Stats.week52high)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>52 Week Low</b></td>
+                                            <td>$@string.Format("{0:N2}", Model.Stats.week52low)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>P/E Ratio</b></td>
+                                            <td>@string.Format("{0:N2}", Model.Stats.peRatio)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>EPS <sup>1</sup></b></td>
+                                            <td>@string.Format("{0:N2}", Model.Stats.ttmEPS)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Div Rate <sup>1</sup></b></td>
+                                            <td>$@string.Format("{0:N2}", Model.Stats.ttmDividendRate)</td>
+                                        </tr>
+                                    }
                                 </table>
                             </div>
                         </div>
 
                     </div>
+                </div>
+
+                <div class="row">
+                    <hr />
+                    <p class="caption"><sup>1</sup> Trailing 12 Months (TTM)</p>
                 </div>
             }
         }
