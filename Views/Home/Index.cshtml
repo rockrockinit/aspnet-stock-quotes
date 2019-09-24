@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Stock Quotes";
+}
+
+    <div class="container" id="app">
+        <div class="row top form-inline">
+            <div class="col-xs-12 text-center">
+                <form method="get">
+                    <div class="input-group input-group-ticker">
+                        <input type="text" class="form-control input-symbol" name="symbol" value="@Model.Symbol" maxlength="5" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">Get Quote</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @if (!String.IsNullOrEmpty(Model.Symbol))
+        {
+            if (!Model.Quote.ContainsKey("symbol"))
+            {
+                <div class="alerts">
+                    <div class="alert alert-danger text-center">Stock symbol <b>@Model.Symbol</b> not found!</div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <h1>@Model.Quote.symbol <small>(@Model.Quote.primaryExchange)</small></h1>
+                            <h3>$@string.Format("{0:N2}", Model.Quote.latestPrice)</h3>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3>@Model.Quote.latestTime</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <td><b>Open</b></td>
+                                        <td>$@string.Format("{0:N2}", Model.Quote.open)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Close</b></td>
+                                        <td>$@string.Format("{0:N2}", Model.Quote.close)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>High</b></td>
+                                        <td>$@string.Format("{0:N2}", Model.Quote.high)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Low</b></td>
+                                        <td>$@string.Format("{0:N2}", Model.Quote.low)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Volume</b></td>
+                                        <td>@Model.Quote.volume.ToString("N0")</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+    </div>
