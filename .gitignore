@@ -1,3 +1,6 @@
 appsettings.Development.json
+appsettings.Production.json
+Properties/PublishProfiles/
+*.user
 bin/
 obj/
