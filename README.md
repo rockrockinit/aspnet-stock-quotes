@@ -4,7 +4,7 @@ An ASP.NET stock market stats tool which utilizes the IEX Cloud API
 
 ### [View Demo &raquo;](http://www.edrodriguez.com/stocks/)
 
-##Overview
+## Overview
 
 This tool demostrates one of the many ways to integrate an external API in ASP.NET MVC. It utilizes the [IEX Cloud API](https://iexcloud.io/docs/api/#key-stats) for retrieving stock market stats.
 
